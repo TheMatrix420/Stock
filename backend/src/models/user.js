@@ -73,15 +73,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notNull: {
             msg: "El password es obligatorio",
-          },
-          isAlphanumeric: {
-            args: true,
-            msg: "Debe contener solo números o letras",
-          },
-          len: {
-            args: [5, 15],
-            msg: "El password tiene que ser entre 5 y 15 caracteres",
-          },
+          }
         },
       },
       role: {
