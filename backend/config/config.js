@@ -5,7 +5,7 @@ process.env.SEED = process.env.SEED || "este-es-el-seed-desarrollo";
 
 module.exports = {
   username: "postgres",
-  password: "fenix5769",
+  password: "586vm5jm",
   database: "stock",
   host: "localhost",
   dialect: "postgres",
