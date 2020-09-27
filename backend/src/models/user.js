@@ -78,16 +78,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       role: {
         type: DataTypes.STRING,
-        default: "user_role",
+        defaultValue: "user_role",
         enum: rolesValidos,
       },
       estado: {
         type: DataTypes.BOOLEAN,
-        default: true,
+        defaultValue: true,
       },
       google: {
         type: DataTypes.BOOLEAN,
-        default: false,
+        defaultValue: false,
       },
     },
     {
