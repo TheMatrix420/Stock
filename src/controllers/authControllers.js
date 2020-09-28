@@ -25,6 +25,7 @@ async function signIn(req, res) {
     const usuario = await User.findOne({
       where: {
         email,
+        estado: true,
       },
     });
 
@@ -32,16 +33,17 @@ async function signIn(req, res) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: "Usuario incorrecto",
+          message: "Usuario o Contraseña incorrecta",
         },
       });
     }
+
 
     if (!bcrypt.compareSync(password, usuario.password)) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: "Contraseña incorrecta",
+          message: "Usuario o Contraseña incorrecta",
         },
       });
     }
