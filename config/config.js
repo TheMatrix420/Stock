@@ -1,7 +1,7 @@
 // PUERTO
 process.env.PORT = process.env.PORT || 4000;
 //Token
-process.env.CADUCIDAD_TOKEN = "48h";
+process.env.CADUCIDAD_TOKEN = "1h";
 //SEED DE AUTENTICACION
 process.env.SEED =
   process.env.SEED ||
