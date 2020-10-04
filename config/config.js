@@ -12,7 +12,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 if (process.env.NODE_ENV === "dev") {
   module.exports = {
     username: "postgres",
-    password: "586vm5jm",
+    password: "fenix5769",
     database: "stock",
     host: "localhost",
     dialect: "postgres",
@@ -24,6 +24,8 @@ if (process.env.NODE_ENV === "dev") {
       timestamps: false,
     },
   };
+
+  process.env.URL_BASE = "http://localhost:4000";
 } else {
   module.exports = {
     username: process.env.DB_USERNAME,
@@ -39,4 +41,5 @@ if (process.env.NODE_ENV === "dev") {
       timestamps: false,
     },
   };
+  process.env.URL_BASE = process.env.URL_BASE;
 }

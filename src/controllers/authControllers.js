@@ -30,7 +30,7 @@ async function signUp(req, res) {
         }
       }));
 
-      const url = `http://localhost:4000/api/confirmar/${tokenMail}`;
+      const url = `${process.env.URL_BASE}/api/confirmar/${tokenMail}`;
 
       const mail = {
         from: 'stockmatrix1@gmail.com',
