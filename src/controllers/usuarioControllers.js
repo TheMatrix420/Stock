@@ -95,7 +95,8 @@ async function getAll(req, res) {
     });
 
     if (usuarios.length === 0) {
-      return res.status(404).json({
+      return res.json({
+        status:404,
         message: "no se encontraron usuarios",
       });
     }
@@ -118,7 +119,8 @@ async function getId(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({
+      return res.json({
+        status:404,
         message: "no se encontro el usuario",
       });
     }
