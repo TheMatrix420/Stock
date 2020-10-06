@@ -69,13 +69,15 @@ async function confirm(req, res) {
     });
 
     if(!usuario){
-      return res.status(404).json({
+      return res.json({
+        status:404,
         message:'el  usuario no esta registrado'
       })
     }
 
     if(usuario.estado===true){
-      return res.status(400).json({
+      return res.json({
+        status: 400,
         message:'el usuario ya se encuentra activo'
       })
     }
@@ -89,7 +91,8 @@ async function confirm(req, res) {
     });
 
     if (!updateUser) {
-      return res.status(404).json({
+      return res.json({
+        status:404,
         message: 'usuario no encontrado'
       })
     }
@@ -118,8 +121,8 @@ async function signIn(req, res) {
     });
 
     if (!usuario) {
-      return res.status(400).json({
-        ok: false,
+      return res.json({
+        status: 400,
         err: {
           message: "Usuario o Contraseña incorrecta",
         },
@@ -128,8 +131,8 @@ async function signIn(req, res) {
 
 
     if (!bcrypt.compareSync(password, usuario.password)) {
-      return res.status(400).json({
-        ok: false,
+      return res.json({
+        status: 400,
         err: {
           message: "Usuario o Contraseña incorrecta",
         },
@@ -145,7 +148,7 @@ async function signIn(req, res) {
     );
 
     res.json({
-      ok: true,
+      status: 200,
       usuario: usuario,
       token,
     });

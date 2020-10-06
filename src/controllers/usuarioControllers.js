@@ -10,7 +10,8 @@ async function updateUser(req, res) {
     });
 
     if (!userEditado) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "usuario no encontrado",
       });
     }
@@ -37,7 +38,8 @@ async function activate(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "usuario no encontrado",
       });
     }
@@ -65,7 +67,8 @@ async function unactivate(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({
+      return res.json({
+        status:404,
         message: "usuario no encontrado",
       });
     }
