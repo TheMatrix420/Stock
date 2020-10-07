@@ -1,7 +1,7 @@
 // PUERTO
 process.env.PORT = process.env.PORT || 4000;
 //Token
-process.env.CADUCIDAD_TOKEN = "48h";
+process.env.CADUCIDAD_TOKEN = "1h";
 //SEED DE AUTENTICACION
 process.env.SEED =
   process.env.SEED ||
@@ -12,7 +12,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 if (process.env.NODE_ENV === "dev") {
   module.exports = {
     username: "postgres",
-    password: "fenix5769",
+    password: "586vm5jm",
     database: "stock",
     host: "localhost",
     dialect: "postgres",
@@ -24,6 +24,8 @@ if (process.env.NODE_ENV === "dev") {
       timestamps: false,
     },
   };
+
+  process.env.URL_BASE = "http://localhost:4000";
 } else {
   module.exports = {
     username: process.env.DB_USERNAME,
@@ -39,4 +41,5 @@ if (process.env.NODE_ENV === "dev") {
       timestamps: false,
     },
   };
+  process.env.URL_BASE = process.env.URL_BASE;
 }

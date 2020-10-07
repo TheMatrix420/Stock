@@ -10,7 +10,8 @@ async function updateUser(req, res) {
     });
 
     if (!userEditado) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "usuario no encontrado",
       });
     }
@@ -19,7 +20,8 @@ async function updateUser(req, res) {
 
     res.json(userEditado);
   } catch (e) {
-    res.status(500).json({
+    res.json({
+      status: 500,
       data: {},
       e,
     });
@@ -37,7 +39,8 @@ async function activate(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "usuario no encontrado",
       });
     }
@@ -47,10 +50,10 @@ async function activate(req, res) {
     });
 
     if (newUser) {
-      return res.status(200).json(newUser);
+      return res.json({ status: 200, newUser });
     }
   } catch (error) {
-    res.status(500).json(error);
+    res.json({ status: 500, error });
   }
 }
 
@@ -65,7 +68,8 @@ async function unactivate(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "usuario no encontrado",
       });
     }
@@ -75,10 +79,10 @@ async function unactivate(req, res) {
     });
 
     if (newUser) {
-      return res.status(200).json(newUser);
+      return res.json({ status: 200, newUser });
     }
   } catch (error) {
-    res.status(500).json(error);
+    res.json({ status: 500, error });
   }
 }
 
@@ -92,14 +96,15 @@ async function getAll(req, res) {
     });
 
     if (usuarios.length === 0) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "no se encontraron usuarios",
       });
     }
 
-    res.status(200).json(usuarios);
+    res.json({ status: 200, usuarios });
   } catch (error) {
-    res.status(500).json(error);
+    res.json({ status: 500, error });
   }
 }
 
@@ -115,14 +120,15 @@ async function getId(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({
+      return res.json({
+        status: 404,
         message: "no se encontro el usuario",
       });
     }
 
-    res.status(200).json(usuario);
+    res.json({ status: 200, usuario });
   } catch (error) {
-    res.status(500).json(error);
+    res.json({ status: 500, error });
   }
 }
 
