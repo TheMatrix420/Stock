@@ -48,7 +48,8 @@ async function signUp(req, res) {
       });
     }
   } catch (error) {
-    res.status(500).json({
+    res.json({
+      status: 500,
       error,
       message: "error al enviar el email",
     });
@@ -103,7 +104,7 @@ async function confirm(req, res) {
       message: "correo confirmado",
     });
   } catch (err) {
-    return res.status(401).json(err);
+    return res.json({ status: 401, err });
   }
 }
 
@@ -151,7 +152,8 @@ async function signIn(req, res) {
       token,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
+      status: 500,
       message: "Error al Iniciar Sesión",
       error,
     });
@@ -212,7 +214,8 @@ async function emailPassword(req, res) {
       message: "correo enviado",
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
+      status: 500,
       message: "error en el servidor",
     });
   }
@@ -239,7 +242,8 @@ async function changePassword(req, res) {
 
     res.json(user);
   } catch (error) {
-    res.status(500).json({
+    res.json({
+      status: 500,
       message: "error en el servidor",
     });
   }
@@ -277,7 +281,7 @@ async function resetPassword(req, res) {
 
     if (!changePass) {
       return res.json({
-        status:404,
+        status: 404,
         message: "usuario no encontrado",
       });
     }
@@ -286,7 +290,8 @@ async function resetPassword(req, res) {
       message: "se realizo el cambio de contraseña",
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
+      status: 500,
       message: "error en el servidor",
     });
   }
