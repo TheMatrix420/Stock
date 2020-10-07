@@ -5,12 +5,25 @@ import nodemailer from "nodemailer";
 
 async function signUp(req, res) {
   try {
-    const newUser = await User.create({
+    const newUser = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
-    });
+    };
+
+    const emailUser = await User.findOne({
+      where:{
+        email
+      }
+    })
+
+    if(emailUser){
+      return res.json({
+        status:400,
+        message:'El correo ingresado ya se encuentra registrado'
+      })
+    }
 
     if (newUser) {
       const tokenMail = jwt.sign(
@@ -32,7 +45,7 @@ async function signUp(req, res) {
         },
       });
 
-      const url = `${process.env.URL_BASE}/api/confirmar/${tokenMail}`;
+      const url = `${process.env.URL_BASE_FRONT}/api/confirmar/${tokenMail}`;
 
       const mail = {
         from: "stockmatrix1@gmail.com",
@@ -44,7 +57,8 @@ async function signUp(req, res) {
       transporter.sendMail(mail);
 
       res.json({
-        user: newUser,
+        status:200,
+        message:'Se ha enviado un correo de confirmacion'
       });
     }
   } catch (error) {
@@ -59,48 +73,25 @@ async function signUp(req, res) {
 async function confirm(req, res) {
   try {
     const {
-      newUser: { id },
+      newUser: { first_name,last_name,email,password },
     } = jwt.verify(req.params.token, process.env.SEED);
 
-    const usuario = await User.findOne({
-      where: {
-        id,
-      },
+    const usuario =await User.create({
+      first_name,
+      last_name,
+      email,
+      password
     });
 
-    if (!usuario) {
-      return res.json({
-        status: 404,
-        message: "el  usuario no esta registrado",
-      });
-    }
-
-    if (usuario.estado === true) {
+    if (usuario) {
       return res.json({
         status: 400,
-        message: "el usuario ya se encuentra activo",
-      });
-    }
-
-    const updateUser = await usuario.update(
-      {
-        estado: true,
-      },
-      {
-        where: {
-          id,
-        },
-      }
-    );
-
-    if (!updateUser) {
-      return res.json({
-        status: 404,
-        message: "usuario no encontrado",
+        message: "link invalido",
       });
     }
 
     res.json({
+      status:200,
       message: "correo confirmado",
     });
   } catch (err) {
@@ -211,6 +202,7 @@ async function emailPassword(req, res) {
     transporter.sendMail(mail);
 
     res.json({
+      status:200,
       message: "correo enviado",
     });
   } catch (error) {
@@ -221,37 +213,10 @@ async function emailPassword(req, res) {
   }
 }
 
-async function changePassword(req, res) {
-  try {
-    const { id } = jwt.verify(req.params.token, process.env.SEED);
-
-    const user = await User.findOne({
-      attributes: ["email"],
-      where: {
-        id,
-        estado: true,
-      },
-    });
-
-    if (!user) {
-      return res.json({
-        status: 404,
-        message: "usuario no encontrado",
-      });
-    }
-
-    res.json(user);
-  } catch (error) {
-    res.json({
-      status: 500,
-      message: "error en el servidor",
-    });
-  }
-}
-
 async function resetPassword(req, res) {
   try {
-    const { email, password1, password2 } = req.body;
+    const { id } = jwt.verify(req.params.token, process.env.SEED);
+    const { password1, password2 } = req.body;
     const password = bcrypt.hashSync(password1, 10);
 
     if (password1.length <= 6) {
@@ -274,7 +239,7 @@ async function resetPassword(req, res) {
       },
       {
         where: {
-          email,
+          id,
         },
       }
     );
@@ -287,8 +252,10 @@ async function resetPassword(req, res) {
     }
 
     res.json({
+      status:200,
       message: "se realizo el cambio de contraseña",
     });
+
   } catch (error) {
     res.json({
       status: 500,
@@ -302,6 +269,5 @@ export default {
   signIn,
   confirm,
   emailPassword,
-  changePassword,
   resetPassword,
 };

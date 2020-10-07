@@ -26,6 +26,7 @@ if (process.env.NODE_ENV === "dev") {
   };
 
   process.env.URL_BASE = "http://localhost:4000";
+  process.env.URL_BASE_FRONT = "http://localhost:8080";
 } else {
   module.exports = {
     username: process.env.DB_USERNAME,
@@ -42,4 +43,5 @@ if (process.env.NODE_ENV === "dev") {
     },
   };
   process.env.URL_BASE = process.env.URL_BASE;
+  process.env.URL_BASE_FRONT = process.env.URL_BASE_FRONT;
 }
