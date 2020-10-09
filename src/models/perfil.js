@@ -15,32 +15,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       img: {
         type: DataTypes.STRING,
+        defaultValue: "no-image",
       },
       telefono: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "El telefono es obligatorio",
-          },
-          isInt: {
-            args: true,
-            msg: "Debe contener solo números",
-          },
-          min: {
-            args: 9,
-            msg: "El telefono tiene que ser de 9 digitos",
-          },
-        },
+        allowNull: true,
+        validate: {},
       },
       direccion: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "La direccion es obligatoria",
-          },
-        },
+        allowNull: true,
+        validate: {},
       },
     },
     {

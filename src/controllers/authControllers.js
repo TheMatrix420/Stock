@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../database/db";
+import { User, Perfil } from "../database/db";
 import nodemailer from "nodemailer";
 
 async function signUp(req, res) {
@@ -11,19 +11,6 @@ async function signUp(req, res) {
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
     };
-
-    const emailUser = await User.findOne({
-      where:{
-        email
-      }
-    })
-
-    if(emailUser){
-      return res.json({
-        status:400,
-        message:'El correo ingresado ya se encuentra registrado'
-      })
-    }
 
     if (newUser) {
       const tokenMail = jwt.sign(
@@ -57,8 +44,8 @@ async function signUp(req, res) {
       transporter.sendMail(mail);
 
       res.json({
-        status:200,
-        message:'Se ha enviado un correo de confirmacion'
+        status: 200,
+        message: "Se ha enviado un correo de confirmacion",
       });
     }
   } catch (error) {
@@ -73,17 +60,39 @@ async function signUp(req, res) {
 async function confirm(req, res) {
   try {
     const {
-      newUser: { first_name,last_name,email,password },
+      newUser: { first_name, last_name, email, password },
     } = jwt.verify(req.params.token, process.env.SEED);
 
-    const usuario =await User.create({
-      first_name,
-      last_name,
-      email,
-      password
+    const emailUser = await User.findOne({
+      where: {
+        email,
+      },
     });
 
-    if (usuario) {
+    if (emailUser) {
+      return res.json({
+        status: 400,
+        message: "El correo ingresado ya se encuentra registrado",
+      });
+    }
+
+    const usuario = await User.create(
+      {
+        first_name,
+        last_name,
+        email,
+        password,
+        Perfil: {},
+      },
+      {
+        include: {
+          model: Perfil,
+          as: "Perfil",
+        },
+      }
+    );
+
+    if (!usuario) {
       return res.json({
         status: 400,
         message: "link invalido",
@@ -91,7 +100,7 @@ async function confirm(req, res) {
     }
 
     res.json({
-      status:200,
+      status: 200,
       message: "correo confirmado",
     });
   } catch (err) {
@@ -202,7 +211,7 @@ async function emailPassword(req, res) {
     transporter.sendMail(mail);
 
     res.json({
-      status:200,
+      status: 200,
       message: "correo enviado",
     });
   } catch (error) {
@@ -252,10 +261,9 @@ async function resetPassword(req, res) {
     }
 
     res.json({
-      status:200,
+      status: 200,
       message: "se realizo el cambio de contraseña",
     });
-
   } catch (error) {
     res.json({
       status: 500,

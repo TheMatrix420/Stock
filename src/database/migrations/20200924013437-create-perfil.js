@@ -1,36 +1,36 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Perfils', {
+    await queryInterface.createTable("Perfils", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       img: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       telefono: {
         type: Sequelize.INTEGER,
-        allowNull:false
+        allowNull: true,
       },
       direccion: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
       //TODO:Hacer la asociación con modelo perfin para que se cree con db:migrate
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Perfils');
-  }
+    await queryInterface.dropTable("Perfils");
+  },
 };
