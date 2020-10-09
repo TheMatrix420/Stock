@@ -12,7 +12,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 if (process.env.NODE_ENV === "dev") {
   module.exports = {
     username: "postgres",
-    password: "586vm5jm",
+    password: "fenix5769",
     database: "stock",
     host: "localhost",
     dialect: "postgres",
