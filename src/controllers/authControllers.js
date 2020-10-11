@@ -32,7 +32,7 @@ async function signUp(req, res) {
         },
       });
 
-      const url = `${process.env.URL_BASE_FRONT}/api/confirmar/${tokenMail}`;
+      const url = `${process.env.URL_BASE_FRONT}/${tokenMail}`;
 
       const mail = {
         from: "stockmatrix1@gmail.com",
@@ -199,7 +199,7 @@ async function emailPassword(req, res) {
       },
     });
 
-    const url = `${process.env.URL_BASE}/api/cambiar_contrasena/${token}`;
+    const url = `${process.env.URL_BASE}/${token}`;
 
     const mail = {
       from: "stockmatrix1@gmail.com",

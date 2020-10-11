@@ -27,7 +27,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      //TODO:Hacer la asociación con modelo perfin para que se cree con db:migrate
+      UserId: {
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users'
+          },
+          key: 'id'
+        },
+        allowNull: false
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
