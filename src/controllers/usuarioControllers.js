@@ -18,7 +18,7 @@ async function updateUser(req, res) {
 
     const user = await userEditado.update({ first_name, last_name, email });
 
-    res.json(userEditado);
+    res.json(user);
   } catch (e) {
     res.json({
       status: 500,

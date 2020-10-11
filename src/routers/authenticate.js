@@ -1,12 +1,12 @@
 import { Router } from "express";
-import authControllers from "../controllers/authControllers";
+import auth from "../controllers/authControllers";
 
 const router = Router();
 
-router.post("/registro", authControllers.signUp);
-router.post("/login", authControllers.signIn);
-router.get('/confirmar/:token',authControllers.confirm);
-router.get('/recuperar_contrasena',authControllers.emailPassword)
-router.put('/restablecer_contrasena/:token',authControllers.resetPassword)
+router.post("/registro", auth.signUp);
+router.post("/login", auth.signIn);
+router.get('/confirmar/:token',auth.confirm);
+router.get('/recuperar_contrasena',auth.emailPassword)
+router.put('/restablecer_contrasena/:token',auth.resetPassword)
 
 export default router;

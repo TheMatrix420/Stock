@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import router from "./routers/index";
 import sequelize from "./database/db";
+import fileupload from 'express-fileupload'
 require("@babel/polyfill");
 require("../config/config");
 
@@ -12,6 +13,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileupload({useTempFiles:true}))
 app.use("/api", router);
 
 app.listen(process.env.PORT, () => {
