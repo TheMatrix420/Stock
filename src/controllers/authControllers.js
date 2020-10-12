@@ -32,7 +32,7 @@ async function signUp(req, res) {
         },
       });
 
-      const url = `${process.env.URL_BASE_FRONT}/${tokenMail}`;
+      const url = `${process.env.URL_BASE_FRONT}/ValidarCuenta/${tokenMail}`;
 
       const mail = {
         from: "stockmatrix1@gmail.com",
