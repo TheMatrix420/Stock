@@ -46,6 +46,7 @@ async function signUp(req, res) {
       res.json({
         status: 200,
         message: "Se ha enviado un correo de confirmacion",
+        tokenMail: tokenMail,
       });
     }
   } catch (error) {
