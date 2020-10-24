@@ -161,6 +161,63 @@ async function signIn(req, res) {
   }
 }
 
+async function facebook(req, res) {
+  try {
+    let { email, first_name,last_name} = req.body;
+    const usuario = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (!usuario) {
+      const newUser= await User.create(
+        {
+          first_name,
+          last_name,
+          email,
+          password:':c',
+          Perfil: {},
+        },
+        {
+          include: {
+            model: Perfil,
+            as: "Perfil",
+          },
+        }
+      );
+
+      const usuario ={
+        first_name:newUser.first_name,
+        last_name:newUser.last_name,
+        email:newUser.email
+      }
+
+      let token = jwt.sign({usuario:usuario,},process.env.SEED,{expiresIn: process.env.CADUCIDAD_TOKEN,});
+  
+      return res.json({
+        status: 200,
+        usuario: usuario,
+        token,
+      });
+    }
+
+    let token = jwt.sign({usuario: usuario,},process.env.SEED,{expiresIn: process.env.CADUCIDAD_TOKEN,});
+
+    res.json({
+      status: 200,
+      usuario: usuario,
+      token,
+    });
+  } catch (error) {
+    return res.json({
+      status: 500,
+      message: "Error al Iniciar Sesión",
+      error,
+    });
+  }
+}
+
 async function emailPassword(req, res) {
   try {
     const { email } = req.body;
@@ -279,4 +336,5 @@ export default {
   confirm,
   emailPassword,
   resetPassword,
+  facebook,
 };
